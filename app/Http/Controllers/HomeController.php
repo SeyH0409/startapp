@@ -25,21 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = \Auth::user();
-        // ログインしているユーザーを$userに代入している
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        // ASCが昇順DESCが降順
-        // Memoモデルからログインしているしているユーザーidと保存されているメモのユーザーidが
-        // 合致しているかつstatusが1の値を$memosに代入している
-        return view('create', compact('user', 'memos'));
+        return view('create');
     }
 
     public function create()
     {
-        //ログインしているユーザーの情報をviewにかえす返す
-        $user = \Auth::user();
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        return view('create', compact('user', 'memos'));
+        return view('create');
     }
 
     public function store(Request $request)
@@ -78,16 +69,14 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    public function edit($id){
-        // 該当するIDのメモをデータベースから取得
+    public function edit($id)
+    {
         $user = \Auth::user();
+        // 該当するIDのメモをデータベースから取得
         $memo = Memo::where('status', 1)->where('id', $id)->where('user_id', $user['id'])
           ->first();
-        //   dd($memo);
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        $tags = Tag::where('user_id', $user['id'])->get();
         //取得したメモをViewに渡す
-        return view('edit', compact('memo', 'user', 'memos', 'tags'));
+        return view('edit', compact('memo'));
     }
 
     public function update(Request $request, $id)
