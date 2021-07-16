@@ -89,7 +89,7 @@
               <div class="card-body py-2 px-4">
                 <a class='d-block' href='/'>全て表示</a>
                   @foreach($tags as $tag)
-                    <a href="/edit/{{ $memo['id']}}" class="d-block">{{ $tag['name'] }}</a>
+                    <a href="/?tag={{ $tag['name']}}" class="d-block">{{ $tag['name'] }}</a>
                   @endforeach
                 </div>
               </div>
